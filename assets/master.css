@@ -1,6 +1,7 @@
 *{
   padding: 0;
   margin: 0;
+  border: 0;
   box-sizing: border-box;
 }
 
@@ -40,20 +41,33 @@ footer {
   background-color: lightgrey;
   float: right;
   display: flex;
-  flex-direction: row;
 }
 
 footer > .cont {
   width: 10%;
   height: 100%;
-  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  position: relative;
+footer > .cont-message {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer > .cont-message, .input-message-footer {
+  width: 95%;
+  height: 80%;
+  align-self: center;
+  border-radius: 30px;
+  font-size: 10px;
+  padding-left: 15px;
 }
 
 footer > .smile, i {
-  position: absolute;
-  right: 50%;
-  color: blue;
-
+  font-size: 25px;
+  color: grey;
 }
