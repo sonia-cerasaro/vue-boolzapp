@@ -4,6 +4,56 @@
   box-sizing: border-box;
 }
 
-i {
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+nav {
+  width: 100vw;
+  height: 60px;
+  background-color: lightgrey;
+  position: fixed;
+}
+
+aside {
+  width: 30vw;
+  height: 100vh;
+  background-color: grey;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 1;
+}
+
+
+section {
+  width: 100vw;
+  height: calc(100vh - 60px);
+  background-color: blue;
+  background-image: url('../assets/img/mine.jpg');
+}
+
+footer {
+  width: calc(100vw - 30vw);
+  height: 60px;
+  background-color: lightgrey;
+  float: right;
+  display: flex;
+  flex-direction: row;
+}
+
+footer > .cont {
+  width: 10%;
+  height: 100%;
+  background-color: white;
+
+  position: relative;
+}
+
+footer > .smile, i {
+  position: absolute;
+  right: 50%;
   color: blue;
+
 }
