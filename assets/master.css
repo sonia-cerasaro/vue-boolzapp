@@ -10,13 +10,64 @@
   height: 100vh;
 }
 
+/* NAV */
 nav {
-  width: 100vw;
+  width: calc(100vw - 30vw);
   height: 60px;
   background-color: lightgrey;
-  position: fixed;
+  float: right;
+  display: flex;
+  justify-content: space-between;
 }
 
+nav > .cont_left, .cont_right {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 15px;
+}
+
+nav > .cont_left {
+  margin-left: 5px;
+}
+
+nav > .cont_right {
+  margin-right: 5px;
+}
+
+.cont_right > .icons_nav_cont > a > i {
+  margin-left: 15px;
+}
+
+.cont_mes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.cont_mes > h6 {
+  margin-top: 10px;
+}
+
+.avat_cont {
+  width: 80px;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+}
+
+/* ASIDE */
 aside {
   width: 30vw;
   height: 100vh;
@@ -27,7 +78,99 @@ aside {
   z-index: 1;
 }
 
+aside > .top_container_aside {
+  width: 100%;
+  height: 220px;
+}
 
+/* NAV ASIDE */
+.nav_aside {
+  width: 100%;
+  height: 60px;
+  background-color: #bbbcbf;
+  display: flex;
+  justify-content: space-between;
+}
+
+aside > .bottom_container_aside {
+  width: 100%;
+  height: 100%;
+  background-color: yellow;
+}
+
+img.avatar.two {
+  margin-top: 5px;
+}
+
+.cont_right {
+  margin-right: 5px;
+}
+
+/* BELL BAR ASIDE */
+.reserch_change_top_bar {
+  width: 100%;
+  height: 75px;
+  background-color: lightblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+}
+
+.avat_cont.bell {
+  width: 65px;
+  height: 50px;
+  background-color: #fff;
+  border-radius: 50%;
+  margin-left: 15px;
+}
+
+.avat_cont.bell > i {
+  font-size: 18px;
+}
+
+.cont_mes.bell {
+  margin-left: 7px;
+}
+
+.cont_mes.bell > p.underline {
+  text-decoration: underline;
+}
+
+/* SEARCH BAR ASIDE */
+.reserch_bar {
+  width: 100%;
+  height: 44px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.avat_cont.search > i {
+  font-size: 15px;
+}
+
+.cont_text.search > input {
+  width: 180px;
+}
+
+/* AVATAR ASIDE */
+
+.reserch_change_top_bar.avatars {
+  height: calc(100% / 8);
+  background-color: #d9dde2;
+
+}
+
+.avat_cont.avatars {
+  margin-left: 15px;
+}
+
+
+
+
+/* MAIN SECTION */
 section {
   width: 100vw;
   height: calc(100vh - 60px);
@@ -35,6 +178,7 @@ section {
   background-image: url('../assets/img/mine.jpg');
 }
 
+/* FOOTER */
 footer {
   width: calc(100vw - 30vw);
   height: 60px;
