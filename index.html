@@ -15,11 +15,11 @@
         <nav>
           <div class="cont_left">
             <div class="avat_cont">
-              <img class="avatar" src="./assets/img/avatar_7.jpg" alt="">
+              <img class="avatar" src="./assets/img/avatar_5.jpg" alt="">
             </div>
             <div class="cont_mes">
-              <h4>Jonny</h4>
-              <p>Ultimo messaggio alle 11.30pm</p>
+              <h4>Darius</h4>
+              <p>last message received at 11.30 PM</p>
             </div>
           </div>
           <div class="cont_right">
@@ -43,7 +43,7 @@
             <div class="nav_aside">
               <div class="cont_left">
                 <div class="avat_cont">
-                  <img class="avatar two" src="./assets/img/avatar_8.jpg" alt="">
+                  <img class="avatar two" src="./assets/img/avatar_io.jpg" alt="">
                 </div>
               </div>
 
@@ -67,8 +67,8 @@
                 <i class="fas fa-bell-slash"></i>
               </div>
               <div class="cont_mes bell">
-                <p><b>Ricevi notifiche di nuovi messaggi</b></p>
-                <p class="underline">Attiva suoneria notifiche</p>
+                <p><b>Get notifications for new messages</b></p>
+                <p class="underline">Enable sound notifications</p>
               </div>
             </div>
 
@@ -77,19 +77,22 @@
                 <i class="fas fa-search"></i>
               </div>
               <div class="cont_text search">
-                <input type="text" name="" value="" placeholder="Cerca o inizia una nuova chat">
+                <input type="text" name="" value="" placeholder="Search or start a new chat">
               </div>
             </div>
           </div>
 <!-- AVATARS -->
           <div class="bottom_container_aside">
-            <div class="reserch_change_top_bar avatars">
+            <div class="reserch_change_top_bar avatars"
+            v-for="(avatar) in contacts">
               <div class="avat_cont avatars">
-                <img class="avatar" src="./assets/img/avatar_6.jpg" alt="">
+                <img
+                v-bind:src=" './assets/img/' + avatar.image"
+                class="avatar">
               </div>
               <div class="cont_mes bell">
-                <p><b>Michela</b></p>
-                <p>Bene e tu?</p>
+                <p><b>{{ avatar.name }}</b></p>
+                <p></p>
               </div>
               <div class="time_cont">
               </div>
@@ -106,7 +109,7 @@
           </div>
           <div class="row_mes">
             <div class="message white">
-              <p>Hey man! How are you?</p>
+              <p>Hey! How are you?</p>
             </div>
           </div>
         </section>
@@ -117,7 +120,7 @@
           </div>
 
           <div class="cont-message">
-            <input class="input-message-footer" type="text" name="" placeholder="scrivi un messaggio">
+            <input class="input-message-footer" type="text" name="" placeholder="write a message">
           </div>
 
           <div class="cont mic">
