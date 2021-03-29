@@ -2,10 +2,11 @@ var vue = new Vue(
   {
     el: '#root',
     data: {
+      index: 0,
       contacts: [
       	{
-          image: 'avatar_6.jpg',
-      		name: 'Michelle',
+          image: 'avatar_1.jpg',
+      		name: 'Wilma',
       		avatar: '_1',
       		visible: true,
       		messages: [

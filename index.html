@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Boolzapp</title>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="./assets/master.css">
@@ -12,6 +13,7 @@
     </div>
     <div id="root">
       <header>
+<!-- NAV -->
         <nav>
           <div class="cont_left">
             <div class="avat_cont">
@@ -38,6 +40,7 @@
         </nav>
       </header>
       <main>
+<!-- ASIDE -->
         <aside>
           <div class="top_container_aside">
             <div class="nav_aside">
@@ -84,15 +87,20 @@
 <!-- AVATARS -->
           <div class="bottom_container_aside">
             <div class="reserch_change_top_bar avatars"
+
             v-for="(avatar) in contacts">
-              <div class="avat_cont avatars">
+              <div class="avat_cont avatars active">
                 <img
                 v-bind:src=" './assets/img/' + avatar.image"
                 class="avatar">
               </div>
               <div class="cont_mes bell">
-                <p><b>{{ avatar.name }}</b></p>
-                <p></p>
+                <p><b>
+                  {{ avatar.name }}
+                </b></p>
+                <p class="time" >
+
+                </p>
               </div>
               <div class="time_cont">
               </div>
@@ -103,13 +111,10 @@
 <!-- MESSAGES -->
         <section>
           <div class="row_mes">
-            <div class="message green">
-              <p>Hello buddy!</p>
-            </div>
-          </div>
-          <div class="row_mes">
-            <div class="message white">
-              <p>Hey! How are you?</p>
+            <div class="message"
+            v-for="message in contacts[index].messages"
+            :class="message.status">
+              {{ message.text }}
             </div>
           </div>
         </section>
@@ -118,24 +123,20 @@
           <div class="cont smile">
             <i class="fas fa-smile"></i>
           </div>
-
           <div class="cont-message">
             <input class="input-message-footer" type="text" name="" placeholder="write a message">
           </div>
-
           <div class="cont mic">
             <i class="fas fa-microphone"></i>
           </div>
-
         </footer>
       </main>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./assets/main.js" charset="utf-8"></script>
-
   </body>
 </html>
