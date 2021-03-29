@@ -85,18 +85,20 @@
             </div>
           </div>
 <!-- AVATARS -->
-          <div class="bottom_container_aside">
+          <div class="bottom_container_aside"
+          v-for="(contact, i) in contacts">
             <div class="reserch_change_top_bar avatars"
 
-            v-for="(avatar) in contacts">
+            v-on:click="index = i">
               <div class="avat_cont avatars active">
                 <img
-                v-bind:src=" './assets/img/' + avatar.image"
+                v-bind:src=" `./assets/img/avatar${contact.avatar}.jpg`"
+
                 class="avatar">
               </div>
               <div class="cont_mes bell">
                 <p><b>
-                  {{ avatar.name }}
+                  {{ contact.name }}
                 </b></p>
                 <p class="time" >
 
@@ -134,7 +136,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./assets/main.js" charset="utf-8"></script>

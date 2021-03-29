@@ -5,7 +5,6 @@ var vue = new Vue(
       index: 0,
       contacts: [
       	{
-          image: 'avatar_1.jpg',
       		name: 'Wilma',
       		avatar: '_1',
       		visible: true,
@@ -28,7 +27,6 @@ var vue = new Vue(
       		],
       	},
       	{
-          image: 'avatar_4.jpg',
       		name: 'George',
       		avatar: '_2',
       		visible: true,
@@ -51,7 +49,6 @@ var vue = new Vue(
       		],
       	},
       	{
-          image: 'avatar_8.jpg',
       		name: 'Kevin',
       		avatar: '_3',
       		visible: true,
@@ -74,7 +71,6 @@ var vue = new Vue(
       		],
       	},
       	{
-          image: 'avatar_2.jpg',
       		name: 'Luke',
       		avatar: '_4',
       		visible: true,
