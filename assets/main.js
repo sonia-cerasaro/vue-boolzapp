@@ -87,6 +87,37 @@ var vue = new Vue(
       			}
       		],
       	},
-      ]
+      ],
+    },
+    methods: {
+      getTime: function (date) {
+        var datetime = new Date(date);
+        var hours = datetime.getHours();
+        var minutes = datetime.getMinutes();
+        return `${hours}:${minutes}`;
+      },
+      getCurrentDate: function () {
+        var today = new Date();
+        var hours = today.getHours();
+        var min = today.getMinutes();
+        return `${hours}:${min}`;
+      },
+      sendMessage: function () {
+        var text = $('input[name=textboxMessage]').val();
+        var contact = this.contacts[this.index];
+        contact.messages.push({
+          date: this.getCurrentDate(),
+          text: text,
+          status: 'sent'
+        });
+
+        setTimeout(() => {
+          this.contacts[this.index].messages.push({
+            date: this.getCurrentDate(),
+            text: 'ok',
+            status: 'received'
+          })
+        }, 3000);
+      }
     }
   });

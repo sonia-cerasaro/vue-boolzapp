@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Boolzapp</title>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="./assets/master.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   </head>
@@ -86,27 +85,27 @@
           </div>
 <!-- AVATARS -->
           <div class="bottom_container_aside"
-          v-for="(contact, i) in contacts">
-            <div class="reserch_change_top_bar avatars"
 
-            v-on:click="index = i">
+          v-for="(contact, i) in contacts">
+
+            <div class="reserch_change_top_bar avatars"
+             v-on:click="index = i">
               <div class="avat_cont avatars active">
                 <img
                 v-bind:src=" `./assets/img/avatar${contact.avatar}.jpg`"
-
                 class="avatar">
               </div>
               <div class="cont_mes bell">
                 <p><b>
                   {{ contact.name }}
                 </b></p>
-                <p class="time" >
-
-                </p>
               </div>
               <div class="time_cont">
+                <p class="time">
+                </p>
               </div>
             </div>
+
           </div>
 
         </aside>
@@ -117,7 +116,11 @@
             v-for="message in contacts[index].messages"
             :class="message.status">
               {{ message.text }}
+              <div class="time">
+                {{ getTime(message.date) }}
+              </div>
             </div>
+
           </div>
         </section>
 <!-- FOOTER -->
@@ -126,7 +129,12 @@
             <i class="fas fa-smile"></i>
           </div>
           <div class="cont-message">
-            <input class="input-message-footer" type="text" name="" placeholder="write a message">
+            <input v-on:submit="sendMessage"
+            @keyup.enter="sendMessage"
+            class="input-message-footer"
+            type="text" name="textboxMessage"
+            placeholder="write a message"
+            >
           </div>
           <div class="cont mic">
             <i class="fas fa-microphone"></i>
@@ -136,7 +144,6 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./assets/main.js" charset="utf-8"></script>
