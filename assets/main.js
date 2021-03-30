@@ -3,6 +3,8 @@ var vue = new Vue(
     el: '#root',
     data: {
       index: 0,
+      message: '',
+      currentAvatar: `./assets/img/avatar_1.jpg`,
       contacts: [
       	{
       		name: 'Wilma',
@@ -103,21 +105,26 @@ var vue = new Vue(
         return `${hours}:${min}`;
       },
       sendMessage: function () {
+        var currentIndex = this.index;
         var text = $('input[name=textboxMessage]').val();
-        var contact = this.contacts[this.index];
+        var contact = this.contacts[currentIndex];
+        this.message = '';
         contact.messages.push({
           date: this.getCurrentDate(),
           text: text,
           status: 'sent'
         });
-
         setTimeout(() => {
-          this.contacts[this.index].messages.push({
+          this.contacts[currentIndex].messages.push({
             date: this.getCurrentDate(),
             text: 'ok',
             status: 'received'
           })
-        }, 3000);
+        }, 2000);
+      },
+      onSelectedAvatar: function (selectedIndex) {
+        this.index = selectedIndex;
+        this.currentAvatar = `./assets/img/avatar${this.contacts[selectedIndex].avatar}.jpg`;
       }
     }
   });
