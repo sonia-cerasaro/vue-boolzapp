@@ -20,8 +20,12 @@
               :src="currentAvatar" alt="">
             </div>
             <div class="cont_mes">
-              <h4>Darius</h4>
-              <p>last message received at 11.30 PM</p>
+              <h4>
+                {{nameSelectedAvatar}}
+              </h4>
+              <p>last message received at
+                {{ lastMessageDate }}
+              </p>
             </div>
           </div>
           <div class="cont_right">
@@ -88,7 +92,6 @@
           <div class="bottom_container_aside"
 
           v-for="(contact, i) in contacts">
-
             <div class="reserch_change_top_bar avatars"
              v-on:click="onSelectedAvatar(i)">
               <div class="avat_cont avatars active">
@@ -103,10 +106,10 @@
               </div>
               <div class="time_cont">
                 <p class="time">
+                  {{ getLastReceivedMessageTime(contact.messages)}}
                 </p>
               </div>
             </div>
-
           </div>
 
         </aside>
@@ -118,10 +121,9 @@
             :class="message.status">
               {{ message.text }}
               <div class="time">
-                {{ message.date }}
+                {{ getMessageTime(message.date) }}
               </div>
             </div>
-
           </div>
         </section>
 <!-- FOOTER -->

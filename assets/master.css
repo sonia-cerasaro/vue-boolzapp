@@ -189,11 +189,16 @@ img.avatar.two {
 }
 
 .reserch_change_top_bar.avatars:hover {
+  background-color: #d9dde2;
   cursor: pointer;
 }
 
 .avat_cont.avatars {
   margin-left: 15px;
+}
+
+.time_cont > p {
+  margin-right: 15px;
 }
 
 /* MAIN SECTION */

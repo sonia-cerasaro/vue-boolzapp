@@ -4,7 +4,9 @@ var vue = new Vue(
     data: {
       index: 0,
       message: '',
+      nameSelectedAvatar: 'Wilma',
       currentAvatar: `./assets/img/avatar_1.jpg`,
+      lastMessageDate: '16:15',
       contacts: [
       	{
       		name: 'Wilma',
@@ -34,7 +36,7 @@ var vue = new Vue(
       		visible: true,
       		messages: [
       			{
-      				date: '20/03/2020 16:30:00',
+      				date: '10/01/2020 15:50:00',
       				text: 'Ciao come stai?',
       				status: 'sent'
       			},
@@ -66,7 +68,7 @@ var vue = new Vue(
       				status: 'sent'
       			},
       			{
-      				date: '28/03/2020 16:15:22',
+      				date: '28/03/2020 18:06:22',
       				text: 'Ah scusa!',
       				status: 'received'
       			}
@@ -92,17 +94,20 @@ var vue = new Vue(
       ],
     },
     methods: {
-      getTime: function (date) {
-        var datetime = new Date(date);
-        var hours = datetime.getHours();
-        var minutes = datetime.getMinutes();
-        return `${hours}:${minutes}`;
+      getMessageTime: function (selectedMessage) {
+        var messageTimes = selectedMessage.split(' ');
+        var splittedMessageTime = messageTimes[1].split(':');
+        return `${splittedMessageTime[0]}:${splittedMessageTime[1]}`
       },
       getCurrentDate: function () {
-        var today = new Date();
-        var hours = today.getHours();
-        var min = today.getMinutes();
-        return `${hours}:${min}`;
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day= date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`
       },
       sendMessage: function () {
         var currentIndex = this.index;
@@ -123,8 +128,17 @@ var vue = new Vue(
         }, 2000);
       },
       onSelectedAvatar: function (selectedIndex) {
+        var currentContact = this.contacts[selectedIndex];
         this.index = selectedIndex;
-        this.currentAvatar = `./assets/img/avatar${this.contacts[selectedIndex].avatar}.jpg`;
+        this.currentAvatar = `./assets/img/avatar${currentContact.avatar}.jpg`;
+        this.lastMessageDate = this.getLastReceivedMessageTime(currentContact.messages);
+        this.nameSelectedAvatar = currentContact.name;
+      },
+      getLastReceivedMessageTime: function (messages) {
+        var filteredMessages = messages.filter(element => {
+        return element.status == 'received'});
+        var messageFullDate = filteredMessages[filteredMessages.length -1].date;
+        return this.getMessageTime(messageFullDate);
       }
     }
   });
