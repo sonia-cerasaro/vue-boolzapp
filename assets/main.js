@@ -6,7 +6,9 @@ var vue = new Vue(
       message: '',
       nameSelectedAvatar: 'Wilma',
       currentAvatar: `./assets/img/avatar_1.jpg`,
-      lastMessageDate: '16:15',
+      lastMessage: '',
+      lastMessageDate: '',
+      searchText: '',
       contacts: [
       	{
       		name: 'Wilma',
@@ -135,10 +137,50 @@ var vue = new Vue(
         this.nameSelectedAvatar = currentContact.name;
       },
       getLastReceivedMessageTime: function (messages) {
+        var found = false;
         var filteredMessages = messages.filter(element => {
         return element.status == 'received'});
+
+        filteredMessages.forEach(item => {
+          if (item.status == 'received') {
+            found = true;
+          }
+        });
+        if (!found) {
+          this.lastMessageDate = '';
+          return;
+        }
         var messageFullDate = filteredMessages[filteredMessages.length -1].date;
         return this.getMessageTime(messageFullDate);
-      }
+      },
+      getLastReceivedMessage: function (messages) {
+        var found = false;
+        var filteredMessages = messages.filter(element => {
+        return element.status == 'received'});
+
+        filteredMessages.forEach(item => {
+          if (item.status == 'received') {
+            found = true;
+          }
+        });
+        if (!found) {
+          this.lastMessage = '';
+          return;
+        }
+        return filteredMessages[filteredMessages.length -1].text;
+      },
+      getCurrentContacts: function () {
+        var currentIndex = this.index;
+        var text = $('input[name=searchBox]').val();
+        var contacts = this.contacts.filter(element => {
+        return element.name.toLowerCase().includes(text.toLowerCase());
+       });
+       return contacts;
+     },
+     deleteSelectedMessage: function (message) {
+       var currentMessages = this.contacts[this.index].messages.filter(element => {
+       return element.text != message.text});
+       this.contacts[this.index].messages = currentMessages;
+     }
     }
   });

@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue Boolzapp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/master.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
   </head>
@@ -20,11 +21,13 @@
               :src="currentAvatar" alt="">
             </div>
             <div class="cont_mes">
-              <h4>
+              <p>
+                <b>
                 {{nameSelectedAvatar}}
-              </h4>
+                </b>
+              <p>
               <p>last message received at
-                {{ lastMessageDate }}
+                {{ getLastReceivedMessageTime(contacts[index].messages) }}
               </p>
             </div>
           </div>
@@ -57,13 +60,16 @@
               <div class="cont_right">
                 <div class="icons_nav_cont">
                   <a href="#">
-                    <i class="fas fa-circle-notch"></i>
+                    <i class="fas fa-circle-notch">
+                    </i>
                   </a>
                   <a href="#">
-                    <i class="fas fa-comment-alt"></i>
+                    <i class="fas fa-comment-alt">
+                    </i>
                   </a>
                   <a href="#">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i class="fas fa-ellipsis-v">
+                    </i>
                   </a>
                 </div>
               </div>
@@ -74,8 +80,14 @@
                 <i class="fas fa-bell-slash"></i>
               </div>
               <div class="cont_mes bell">
-                <p><b>Get notifications for new messages</b></p>
-                <p class="underline">Enable sound notifications</p>
+                <p>
+                  <b>
+                    Get notifications for new messages
+                  </b>
+                </p>
+                <p class="underline">
+                  Enable sound notifications
+                </p>
               </div>
             </div>
 
@@ -83,15 +95,18 @@
               <div class="avat_cont search">
                 <i class="fas fa-search"></i>
               </div>
+<!-- SEARCH INPUT-->
               <div class="cont_text search">
-                <input type="text" name="" value="" placeholder="Search or start a new chat">
+                <input type="text" name="searchBox" value=""
+                v-on:submit="sendMessage(text)"
+                v-model="searchText"
+                placeholder="Search or start a new chat">
               </div>
             </div>
           </div>
 <!-- AVATARS -->
           <div class="bottom_container_aside"
-
-          v-for="(contact, i) in contacts">
+           v-for="(contact, i) in getCurrentContacts()">
             <div class="reserch_change_top_bar avatars"
              v-on:click="onSelectedAvatar(i)">
               <div class="avat_cont avatars active">
@@ -99,14 +114,20 @@
                 v-bind:src=" `./assets/img/avatar${contact.avatar}.jpg`"
                 class="avatar">
               </div>
+
               <div class="cont_mes bell">
                 <p><b>
                   {{ contact.name }}
                 </b></p>
               </div>
+              <div class="cont_text_av">
+                <p>
+                  {{ getLastReceivedMessage(contact.messages) }}
+                </p>
+              </div>
               <div class="time_cont">
                 <p class="time">
-                  {{ getLastReceivedMessageTime(contact.messages)}}
+                  {{ getLastReceivedMessageTime(contact.messages) }}
                 </p>
               </div>
             </div>
@@ -120,9 +141,25 @@
             v-for="message in contacts[index].messages"
             :class="message.status">
               {{ message.text }}
+
+<!-- DROPDOWN -->
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle my_button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#"
+                  v-on:click="deleteSelectedMessage(message)">
+                    Delete
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Info
+                  </a>
+                </div>
+              </div>
               <div class="time">
                 {{ getMessageTime(message.date) }}
               </div>
+
             </div>
           </div>
         </section>
@@ -149,6 +186,7 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./assets/main.js" charset="utf-8"></script>
   </body>
