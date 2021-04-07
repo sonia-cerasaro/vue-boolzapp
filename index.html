@@ -16,6 +16,7 @@
 <!-- NAV -->
         <nav>
           <div class="cont_left">
+<!-- NAV SELECTED AVATAR -->
             <div class="avat_cont">
               <img class="avatar"
               :src="currentAvatar" alt="">
@@ -23,14 +24,15 @@
             <div class="cont_mes">
               <p>
                 <b>
-                {{nameSelectedAvatar}}
+                {{ selectedAvatarName }}
                 </b>
               <p>
               <p>last message received at
-                {{ getLastReceivedMessageTime(contacts[index].messages) }}
+                {{ getLastMessageReceivedDate(index) }}
               </p>
             </div>
           </div>
+<!-- ICONS RIGHT NAV -->
           <div class="cont_right">
             <div class="icons_nav_cont">
               <a href="#">
@@ -47,7 +49,7 @@
         </nav>
       </header>
       <main>
-<!-- ASIDE -->
+<!-- ASIDE SECTION-->
         <aside>
           <div class="top_container_aside">
             <div class="nav_aside">
@@ -56,7 +58,7 @@
                   <img class="avatar two" src="./assets/img/avatar_io.jpg" alt="">
                 </div>
               </div>
-
+<!-- ICONS LEFT NAV -->
               <div class="cont_right">
                 <div class="icons_nav_cont">
                   <a href="#">
@@ -74,7 +76,7 @@
                 </div>
               </div>
             </div>
-
+<!-- ENABLE NOTIFICATION SECTION  -->
             <div class="reserch_change_top_bar">
               <div class="avat_cont bell">
                 <i class="fas fa-bell-slash"></i>
@@ -90,23 +92,22 @@
                 </p>
               </div>
             </div>
-
+<!-- SEARCH BOX-->
             <div class="reserch_bar">
               <div class="avat_cont search">
                 <i class="fas fa-search"></i>
               </div>
-<!-- SEARCH INPUT-->
               <div class="cont_text search">
                 <input type="text" name="searchBox" value=""
-                v-on:submit="sendMessage(text)"
+                v-on:submit="sendMessage()"
                 v-model="searchText"
                 placeholder="Search or start a new chat">
               </div>
             </div>
           </div>
-<!-- AVATARS -->
+<!-- AVATARS ASIDE-->
           <div class="bottom_container_aside"
-           v-for="(contact, i) in getCurrentContacts()">
+           v-for="(contact, i) in getFilteredContacts()">
             <div class="reserch_change_top_bar avatars"
              v-on:click="onSelectedAvatar(i)">
               <div class="avat_cont avatars active">
@@ -114,7 +115,6 @@
                 v-bind:src=" `./assets/img/avatar${contact.avatar}.jpg`"
                 class="avatar">
               </div>
-
               <div class="cont_mes bell">
                 <p><b>
                   {{ contact.name }}
@@ -122,33 +122,31 @@
               </div>
               <div class="cont_text_av">
                 <p>
-                  {{ getLastReceivedMessage(contact.messages) }}
+                  {{ getLastReceivedMessage(i) }}
                 </p>
               </div>
               <div class="time_cont">
                 <p class="time">
-                  {{ getLastReceivedMessageTime(contact.messages) }}
+                  {{ getLastMessageReceivedDate(i) }}
                 </p>
               </div>
             </div>
           </div>
-
         </aside>
 <!-- MESSAGES -->
         <section>
           <div class="row_mes">
             <div class="message"
-            v-for="message in contacts[index].messages"
+            v-for="(message, i) in contacts[index].messages"
             :class="message.status">
               {{ message.text }}
-
-<!-- DROPDOWN -->
+<!-- DROPDOWN WINDOW -->
               <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle my_button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#"
-                  v-on:click="deleteSelectedMessage(message)">
+                  v-on:click="removeSelectedMessage(i)">
                     Delete
                   </a>
                   <a class="dropdown-item" href="#">
@@ -157,9 +155,8 @@
                 </div>
               </div>
               <div class="time">
-                {{ getMessageTime(message.date) }}
+                {{ getMessageDate(message.date) }}
               </div>
-
             </div>
           </div>
         </section>
@@ -169,13 +166,12 @@
             <i class="fas fa-smile"></i>
           </div>
           <div class="cont-message">
-            <input v-on:submit="sendMessage(text)"
+            <input v-on:submit="sendMessage()"
             v-model="message"
             @keyup.enter="sendMessage"
             class="input-message-footer"
             type="text" name="textboxMessage"
-            placeholder="write a message"
-            >
+            placeholder="write a message">
           </div>
           <div class="cont mic">
             <i class="fas fa-microphone"></i>
@@ -183,7 +179,6 @@
         </footer>
       </main>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

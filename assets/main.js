@@ -4,10 +4,10 @@ var vue = new Vue(
     data: {
       index: 0,
       message: '',
-      nameSelectedAvatar: 'Wilma',
+      selectedAvatarName: 'Wilma',
       currentAvatar: `./assets/img/avatar_1.jpg`,
       lastMessage: '',
-      lastMessageDate: '',
+      lastMessageReceivedTime: '',
       searchText: '',
       contacts: [
       	{
@@ -96,10 +96,42 @@ var vue = new Vue(
       ],
     },
     methods: {
-      getMessageTime: function (selectedMessage) {
-        var messageTimes = selectedMessage.split(' ');
-        var splittedMessageTime = messageTimes[1].split(':');
-        return `${splittedMessageTime[0]}:${splittedMessageTime[1]}`
+      onSelectedAvatar: function (selectedIndex) {
+        this.setCurrentIndex(selectedIndex);
+        this.setCurrentAvatar();
+        this.setLastMessageReceivedDate();
+        this.setCurrentName();
+      },
+      sendMessage: function () {
+        var userPushedText = $('input[name=textboxMessage]').val();
+        var currentDate = this.getCurrentDate();
+        this.setUserInputTextBox('');
+        this.insertUserMessage(currentDate, userPushedText, 'sent');
+        this.getFakeResponse();
+      },
+      removeSelectedMessage: function (selectedIndexMessage) {
+        this.contacts[this.index].messages.splice(selectedIndexMessage, 1);
+        this.setMessages(this.contacts[this.index].messages);
+      },
+      insertUserMessage: function (dateReceived, textReceived, statusReceived) {
+       var currentContact = this.contacts[this.index];
+       currentContact.messages.push({
+         date: dateReceived,
+         text: textReceived,
+         status: statusReceived
+       });
+      },
+      checkForReceivedMessage: function (messages) {
+       var isReceivedMessageContained = false;
+        messages.forEach(message => {
+        isReceivedMessageContained = message.status == 'received' ? true : false;
+        });
+        return isReceivedMessageContained;
+      },
+      getMessageDate: function (selectedMessage) {
+        var splittedFullDateTwoParts = selectedMessage.split(' ');
+        var splittedHoursThreeParts = splittedFullDateTwoParts[1].split(':');
+        return `${splittedHoursThreeParts[0]}:${splittedHoursThreeParts[1]}`
       },
       getCurrentDate: function () {
         var date = new Date();
@@ -111,76 +143,84 @@ var vue = new Vue(
         var seconds = date.getSeconds();
         return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`
       },
-      sendMessage: function () {
-        var currentIndex = this.index;
-        var text = $('input[name=textboxMessage]').val();
-        var contact = this.contacts[currentIndex];
-        this.message = '';
-        contact.messages.push({
-          date: this.getCurrentDate(),
-          text: text,
-          status: 'sent'
-        });
+      getLastMessageReceivedDate: function (selectedIndex) {
+        var found = false;
+        var selectedUserMessages = this.getSelectedUserMessages(selectedIndex);
+        var filteredMessages = this.getStatusReceivedMessages(selectedUserMessages);
+        found = this.checkForReceivedMessage(filteredMessages);
+
+        if (!found) {
+          this.setLastMessageDate('--:--');
+          return '--:--';
+        }
+        var messageFullDate = this.getLastFullDateFromMessages(filteredMessages);
+        return this.getMessageDate(messageFullDate);
+      },
+      getLastReceivedMessage: function (selectedIndex) {
+        var found = false;
+        var selectedUserMessages = this.getSelectedUserMessages(selectedIndex);
+        var filteredMessages = this.getStatusReceivedMessages(selectedUserMessages);
+        found = this.checkForReceivedMessage(filteredMessages);
+
+        if (!found) {
+          this.setLastMessage('');
+          return '';
+        }
+        return this.getLastTextFromMessages(filteredMessages);
+      },
+      getFilteredContacts: function () {
+        var userSearchText = $('input[name=searchBox]').val();
+        var filteredContacts = this.contacts.filter(element => {
+        return element.name.toLowerCase().includes(userSearchText.toLowerCase());
+       });
+       return filteredContacts;
+      },
+      getSelectedUserMessages: function (selectedIndex) {
+       return this.contacts[selectedIndex].messages;
+      },
+      getStatusReceivedMessages: function (selectedUserMessages) {
+        return selectedUserMessages.filter(message => {
+        return message.status == 'received'});
+      },
+      getFakeResponse: function () {
         setTimeout(() => {
-          this.contacts[currentIndex].messages.push({
+          this.contacts[this.index].messages.push({
             date: this.getCurrentDate(),
             text: 'ok',
             status: 'received'
           })
         }, 2000);
       },
-      onSelectedAvatar: function (selectedIndex) {
-        var currentContact = this.contacts[selectedIndex];
-        this.index = selectedIndex;
+      getLastFullDateFromMessages: function (messages) {
+        return messages[messages.length -1].date;
+      },
+      getLastTextFromMessages: function (messages) {
+        return messages[messages.length -1].text;
+      },
+      setUserInputTextBox: function (textReceived) {
+        this.message = textReceived;
+      },
+      setCurrentIndex: function (currentIndex) {
+        this.index = currentIndex;
+      },
+      setCurrentAvatar: function () {
+        var currentContact = this.contacts[this.index];
         this.currentAvatar = `./assets/img/avatar${currentContact.avatar}.jpg`;
-        this.lastMessageDate = this.getLastReceivedMessageTime(currentContact.messages);
-        this.nameSelectedAvatar = currentContact.name;
       },
-      getLastReceivedMessageTime: function (messages) {
-        var found = false;
-        var filteredMessages = messages.filter(element => {
-        return element.status == 'received'});
-
-        filteredMessages.forEach(item => {
-          if (item.status == 'received') {
-            found = true;
-          }
-        });
-        if (!found) {
-          this.lastMessageDate = '';
-          return;
-        }
-        var messageFullDate = filteredMessages[filteredMessages.length -1].date;
-        return this.getMessageTime(messageFullDate);
+      setLastMessageReceivedDate: function () {
+        this.lastMessageDate = this.getLastMessageReceivedDate(this.index);
       },
-      getLastReceivedMessage: function (messages) {
-        var found = false;
-        var filteredMessages = messages.filter(element => {
-        return element.status == 'received'});
-
-        filteredMessages.forEach(item => {
-          if (item.status == 'received') {
-            found = true;
-          }
-        });
-        if (!found) {
-          this.lastMessage = '';
-          return;
-        }
-        return filteredMessages[filteredMessages.length -1].text;
+      setLastMessageDate: function (selectedDate) {
+        this.lastMessageDate = selectedDate;
       },
-      getCurrentContacts: function () {
-        var currentIndex = this.index;
-        var text = $('input[name=searchBox]').val();
-        var contacts = this.contacts.filter(element => {
-        return element.name.toLowerCase().includes(text.toLowerCase());
-       });
-       return contacts;
-     },
-     deleteSelectedMessage: function (message) {
-       var currentMessages = this.contacts[this.index].messages.filter(element => {
-       return element.text != message.text});
-       this.contacts[this.index].messages = currentMessages;
-     }
+      setLastMessage: function (textMessage) {
+        this.lastMessage = textMessage;
+      },
+      setCurrentName: function () {
+        this.selectedAvatarName = this.contacts[this.index].name;
+      },
+      setMessages: function (currentMessages) {
+        this.contacts[this.index].messages = currentMessages;
+      },
     }
   });
